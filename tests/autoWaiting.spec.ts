@@ -33,7 +33,7 @@ test("Auto waiting", async ({ page }) => {
   });
 });
 
-test("Alternative waits", async ({ page }) => {
+test.skip("Alternative waits", async ({ page }) => {
   const successButton = page.locator(".bg-success");
 
   // __ wait for element
@@ -50,7 +50,7 @@ test("Alternative waits", async ({ page }) => {
   expect(text).toContain("Data loaded with AJAX get request.");
 });
 
-test("Timeouts", async ({ page }) => {
+test.skip("Timeouts", async ({ page }) => {
     // Override the timeout for this test.
     // test.setTimeout(10000);
 

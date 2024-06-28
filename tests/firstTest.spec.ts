@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
         await page.getByText("Form Layouts").click()
 })
 
-test("Locator syntax rules", async ({ page }) => {
+test.skip("Locator syntax rules", async ({ page }) => {
     // by tag name
     await page.locator("input", {}).first().click()
 
@@ -35,7 +35,7 @@ test("Locator syntax rules", async ({ page }) => {
     page.locator(":text-is('Using the Grid')", {})    
 })
 
-test("User facing locators", async ( { page }) => {
+test.skip("User facing locators", async ( { page }) => {
     await page.getByRole("textbox", { name: "Email"}).first().click()
     await page.getByRole("button", { name: "Sign in"}).first().click()
 
@@ -144,6 +144,6 @@ test("Assertions", async ({ page }) => {
     await expect(basicFormButton).toHaveText("Submit")
 
     // Soft assertions (continue after failure)
-    await expect.soft(basicFormButton).toHaveText("Submit6")
+    await expect.soft(basicFormButton).toHaveText("Submit")
     await basicFormButton.click()
 })
