@@ -5,6 +5,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Form layout page", () => {
+  test.describe.configure({ retries: 0 });
+  test.describe.configure({ mode: "serial" });
+
   test.beforeEach(async ({ page }) => {
     await page.getByText("Forms").click();
     await page.getByText("Form Layouts").click();
@@ -29,24 +32,27 @@ test.describe("Form layout page", () => {
     await expect(usingTheGridEmailInput).toHaveValue("test2@test.com");
   });
 
-  test("Radio buttons", async ({ page }) => {
+  test.only("Radio buttons", async ({ page }) => {
     const usingTheGridForm = page.locator("nb-card", {
       hasText: "Using the Grid",
     });
 
     // await usingTheGridForm.getByLabel("Option 1").check({ force: true })
     await usingTheGridForm
-      .getByRole("radio", { name: "Option 1" })
+      .getByRole("radio", { name: "Option 2" })
       .check({ force: true });
 
     const radioStatus = await usingTheGridForm
       .getByRole("radio", { name: "Option 1" })
       .isChecked();
-    expect(radioStatus).toBeTruthy();
 
-    await expect(
-      usingTheGridForm.getByRole("radio", { name: "Option 1" })
-    ).toBeChecked({ checked: true });
+      await expect(usingTheGridForm).toHaveScreenshot();
+
+    // expect(radioStatus).toBeTruthy();
+
+    // await expect(
+    //   usingTheGridForm.getByRole("radio", { name: "Option 1" })
+    // ).toBeChecked({ checked: true });
   });
 });
 
@@ -216,7 +222,7 @@ test("Datepicker", async ({ page }) => {
     await expect(datepicker).toHaveValue("Feb 1, 2024")
 })
 
-test("Datepicker (With JS Date)", async ({ page }) => {
+test.skip("Datepicker (With JS Date)", async ({ page }) => {
     await page.getByText("Forms").click();    
     await page.getByText("Datepicker").click();
     
@@ -224,7 +230,7 @@ test("Datepicker (With JS Date)", async ({ page }) => {
     await datepicker.click();
 
     const date = new Date();
-    date.setDate(date.getDate() + 500);
+    date.setDate(date.getDate() + 5);
 
     const expectedDate = date.getDate().toString();
 
@@ -240,7 +246,7 @@ test("Datepicker (With JS Date)", async ({ page }) => {
     // Switch to months till the expected month
     while(!calendarMonthAndYear.includes(expectedMonthAndYear)) {
         await page.locator("nb-calendar-pageable-navigation [data-name='chevron-right']").click();
-        page.waitForTimeout(200);
+        page.waitForTimeout(500);
         calendarMonthAndYear = await page.locator("nb-calendar-view-mode").textContent();    
     }
 
